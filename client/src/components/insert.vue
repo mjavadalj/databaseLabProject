@@ -1,15 +1,5 @@
 <template>
 <div>
- <v-toolbar>
-      <v-toolbar-title>DB Project</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-toolbar-items>
-        <v-btn text>Insert</v-btn>
-        <v-btn text>Get</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
 <div class="bod">
 
 <div class="margin">
@@ -92,7 +82,7 @@
           <v-text-field
             v-model="groupId"
             :counter="30"
-            label="Group Name"
+            label="Group Id"
             required
           ></v-text-field>
         </v-col>
@@ -114,18 +104,6 @@
           md="4"
         >
           <v-text-field
-            v-model="groupOwner"
-            :counter="10"
-            label="Group Owner"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
             v-model="description"
             label="description"
             required
@@ -135,7 +113,7 @@
     </v-container>
 <div class="button">
     <div class="text-center">
-        <v-btn class="ma-2" outlined color="indigo">Insert Group</v-btn>
+        <v-btn class="ma-2" outlined color="indigo" @click="insertgroup">Insert Group</v-btn>
     </div>
 </div>
 
@@ -168,7 +146,7 @@
           <v-text-field
             v-model="pageId"
             :counter="10"
-            label="page Name"
+            label="page Id"
             required
           ></v-text-field>
         </v-col>
@@ -199,7 +177,7 @@
     </v-container>
 <div class="button">
     <div class="text-center">
-        <v-btn class="ma-2" outlined color="success">Insert Page</v-btn>
+        <v-btn class="ma-2" outlined color="success" @click="insertpage">Insert Page</v-btn>
     </div>
 </div>
 
@@ -232,7 +210,6 @@ export default {
     email:"",
     groupId:"",
     groupName:"",
-    groupOwner:"",
     description:"",
     pageId:"",
     pageName:"",
@@ -253,7 +230,48 @@ export default {
         this.$swal.fire({
                   type: "success",
                   title: "موفق",
-                  text: " ezafe shod"
+                  text: " userezafe shod"
+                });
+        })
+        .catch((err) => {
+        console.log(err);
+        });
+
+    },
+    insertgroup(){
+
+      this.axios
+        .post(`http://localhost:3000/api/insertgroup`, {
+          groupId:this.groupId,
+          groupName: this.groupName,
+          description: this.description
+        })
+        .then(()=> {
+        this.$swal.fire({
+                  type: "success",
+                  title: "موفق",
+                  text: " group ezafe shod!"
+                });
+        })
+        .catch((err) => {
+        console.log(err);
+        });
+
+    },
+    insertpage(){
+
+      this.axios
+        .post(`http://localhost:3000/api/insertpage`, {
+          pageId:this.pageId,
+          pageName: this.userName,
+          admin: this.pageAdmin,
+          email: this.email
+        })
+        .then(()=> {
+        this.$swal.fire({
+                  type: "success",
+                  title: "موفق",
+                  text: " page ezafe shod!"
                 });
         })
         .catch((err) => {
